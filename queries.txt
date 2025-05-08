@@ -1,0 +1,218 @@
+1) Number of employees and average salary in department 20
+sql
+
+SELECT COUNT(*) AS Num_Employees, AVG(Sal) AS Avg_Salary
+FROM EMP
+WHERE DeptNo = 20;
+
+2) Name, salary and PF amount of all employees (PF = 10% of salary)
+sql
+
+SELECT EName, Sal, Sal * 0.10 AS PF
+FROM EMP;
+
+3) Employees who have been in the company for more than 2 years
+sql
+
+SELECT EName, HireDate
+FROM EMP
+WHERE HireDate <= DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+
+4) Employee details in ascending order of their salary
+sql
+
+SELECT *
+FROM EMP
+ORDER BY Sal ASC;
+
+5) Employee name and hire date in descending order of hire date
+sql
+
+SELECT EName, HireDate
+FROM EMP
+ORDER BY HireDate DESC;
+
+6) Employee name, salary, PF, HRA, DA and gross salary
+PF = 10%, HRA = 50%, DA = 30%, Gross = Sal + PF + HRA + DA
+
+sql
+SELECT EName, Sal,
+       Sal * 0.10 AS PF,
+       Sal * 0.50 AS HRA,
+       Sal * 0.30 AS DA,
+       Sal + (Sal * 0.10) + (Sal * 0.50) + (Sal * 0.30) AS Gross
+FROM EMP
+ORDER BY Gross ASC;
+
+7) Department numbers and number of employees in each department
+sql
+
+SELECT DeptNo, COUNT(*) AS Num_Employees
+FROM EMP
+GROUP BY DeptNo;
+
+8) Department number and total salary payable in each department
+sql
+
+SELECT DeptNo, SUM(Sal) AS Total_Salary
+FROM EMP
+GROUP BY DeptNo;
+
+9) Jobs and number of employees in each job (descending by count)
+sql
+
+SELECT Job, COUNT(*) AS Num_Employees
+FROM EMP
+GROUP BY Job
+ORDER BY Num_Employees DESC;
+
+10) Total, max, min, and average salary jobwise
+sql
+
+SELECT Job,
+       SUM(Sal) AS Total_Salary,
+       MAX(Sal) AS Max_Salary,
+       MIN(Sal) AS Min_Salary,
+       AVG(Sal) AS Avg_Salary
+FROM EMP
+GROUP BY Job;
+
+11) Total, max, min, and average salary for department 20
+sql
+
+SELECT SUM(Sal) AS Total_Salary,
+       MAX(Sal) AS Max_Salary,
+       MIN(Sal) AS Min_Salary,
+       AVG(Sal) AS Avg_Salary
+FROM EMP
+WHERE DeptNo = 20;
+
+12) Jobwise salary stats in dept 20 where average salary > 1000
+sql
+
+SELECT Job,
+       SUM(Sal) AS Total_Salary,
+       MAX(Sal) AS Max_Salary,
+       MIN(Sal) AS Min_Salary,
+       AVG(Sal) AS Avg_Salary
+FROM EMP
+WHERE DeptNo = 20
+GROUP BY Job
+HAVING AVG(Sal) > 1000;
+
+
+
+1. List the names of analysts and salesmen.
+sql
+SELECT EName
+FROM EMP
+WHERE Job IN ('Analyst', 'Salesman');
+
+2. List details of employees who have joined before 30 Sep 81.
+sql
+
+SELECT *
+FROM EMP
+WHERE HireDate < '1981-09-30';
+3. List names of employees who are not managers.
+sql
+
+SELECT EName
+FROM EMP
+WHERE Job <> 'Manager';
+
+4. List the names of employees with EmpNos 7369, 7521, 7839, 7934, 7788.
+sql
+
+SELECT EName
+FROM EMP
+WHERE EmpNo IN (7369, 7521, 7839, 7934, 7788);
+
+5. List employees not belonging to departments 30, 40, or 10.
+sql
+SELECT *
+FROM EMP
+WHERE DeptNo NOT IN (30, 40, 10);
+
+6. List employee names who joined between 30 June and 31 Dec 1981.
+sql
+
+SELECT EName
+FROM EMP
+WHERE HireDate BETWEEN '1981-06-30' AND '1981-12-31';
+
+7. List the different designations in the company.
+sql
+
+SELECT DISTINCT Job
+FROM EMP;
+
+8. List names of employees who are not eligible for commission.
+sql
+
+SELECT EName
+FROM EMP
+WHERE Comm IS NULL OR Comm = 0;
+
+9. List name and designation of the employee who does not report to anybody.
+sql
+
+SELECT EName, Job
+FROM EMP
+WHERE Mgr IS NULL;
+
+10. List the employees not assigned to any department.
+sql
+
+SELECT *
+FROM EMP
+WHERE DeptNo IS NULL;
+11. List the employees who are eligible for commission.
+sql
+
+SELECT *
+FROM EMP
+WHERE Comm IS NOT NULL AND Comm > 0;
+
+12. List employees whose names either start or end with “S”.
+sql
+
+SELECT EName
+FROM EMP
+WHERE EName LIKE 'S%' OR EName LIKE '%S';
+
+13. List names of employees whose names have “i” as the second character.
+sql
+
+SELECT EName
+FROM EMP
+WHERE EName LIKE '_i%';
+14. List the number of employees working with the company.
+sql
+
+SELECT COUNT(*) AS Num_Employees
+FROM EMP;
+15. List the number of designations available in the EMP table.
+sql
+
+SELECT COUNT(DISTINCT Job) AS Num_Designations
+FROM EMP;
+16. List the total salaries paid to the employees.
+sql
+
+SELECT SUM(Sal) AS Total_Salary
+FROM EMP;
+17. List the maximum, minimum and average salary in the company.
+sql
+
+SELECT MAX(Sal) AS Max_Salary,
+       MIN(Sal) AS Min_Salary,
+       AVG(Sal) AS Avg_Salary
+FROM EMP;
+
+18. List the maximum salary paid to a salesman.
+sql
+
+SELECT MAX(Sal) AS Max_Salesman_Salary
+FROM EMP
+WHERE Job = 'Salesman';
