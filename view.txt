@@ -66,3 +66,10 @@ WHERE scholar_id = 2;
 -- Step 8: See final result
 SELECT * FROM view_scholar_faculties;
 SELECT * FROM view_faculty_scholar_count;
+
+UPDATE scholars
+SET full_name = 'Aditya'
+WHERE scholar_id = 1;
+
+SELECT * FROM view_scholar_faculties;
+
