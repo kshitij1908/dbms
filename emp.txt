@@ -1,0 +1,20 @@
+Problem statement 10
+a)select ename, job from emp where job='ANALYST' or job='SALESMAN';
+b)select * from emp order by salary limit 1,1;
+c)select * from emp order by salary desc limit 3;
+d)select deptno, count(*) as total_emp from emp group by deptno;
+e)select * from emp order by ename desc;
+f)select distinct job from emp;
+g)select * from emp where ename like '%n';
+h)select count(*) as 'Total_emp' from emp;
+
+Problem statement 7
+select * from emp order by salary desc;
+select * from emp where ename like 'M%';
+select * from emp where empno in (7369,7566,7698,7788);
+select * from emp where salary<1500 and ename='Ward';
+select distinct job from emp;
+select job,salary as 'Maximum_salary' from emp where job='salesman' order by salary desc limit 1 ;
+select max(salary) as 'Max_Salary', min(salary) as 'Min_Salary', avg(salary) as 'Avg_Salary' from emp;
+select * from emp order by salary desc limit 3;
+

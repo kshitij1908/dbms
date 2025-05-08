@@ -1,0 +1,17 @@
+DELIMITER //
+
+CREATE FUNCTION gross1(basic INT)
+RETURNS FLOAT
+DETERMINISTIC
+NO SQL
+BEGIN
+    DECLARE grsal, hra, da, ta FLOAT;
+    SET hra = 0.5 * basic;
+    SET da = basic;
+    SET ta = 0.2 * (basic + hra);
+    SET grsal = basic + hra + da + ta;
+    RETURN grsal;
+END
+//
+
+select gross1(1000)//

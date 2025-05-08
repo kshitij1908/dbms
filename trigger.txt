@@ -1,0 +1,18 @@
+delimiter //
+create trigger acc_log
+after update
+on account_table
+for each row
+begin
+declare tran_type varchar(20);
+declare amt varchar(20);
+if old.amount > new.amount then
+SET tran_type='Withdraw';
+SET amt=old.amount-new.amount;
+else
+SET tran_type='Deposited';
+SET amt=new.amount-old.amount;
+end if;
+insert into account_log values(old.accno,old.name,amount,tran_type,now());
+end
+//

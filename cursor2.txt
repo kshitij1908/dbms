@@ -1,0 +1,49 @@
+DELIMITER //
+
+CREATE PROCEDURE calgrade()
+BEGIN
+    DECLARE s1, s2, s3, tot INT(3);
+    DECLARE id INT(10);
+    DECLARE per FLOAT(5,2);
+    DECLARE sname VARCHAR(10);
+    DECLARE i, cnt INT(3);
+
+    DECLARE done INT DEFAULT 0;
+
+    DECLARE stu_cur CURSOR FOR SELECT sno, name, sub1, sub2, sub3 FROM student;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
+
+    SET i = 0;
+    SELECT COUNT(*) INTO cnt FROM student;
+
+    OPEN stu_cur;
+
+    read_loop: LOOP
+        FETCH stu_cur INTO id, sname, s1, s2, s3;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        SET tot = s1 + s2 + s3;
+        SET per = tot / 3;
+
+        IF per >= 60 THEN
+            INSERT INTO student_first VALUES (id, sname, s1, s2, s3, tot, per);
+        ELSEIF per >= 50 THEN
+            INSERT INTO student_pass VALUES (id, sname, s1, s2, s3, tot, per);
+        ELSE
+            INSERT INTO student_fail VALUES (id, sname, s1, s2, s3, tot, per);
+        END IF;
+
+        UPDATE student SET total = tot, percentage = per WHERE sno = id;
+
+        SET i = i + 1;
+        IF i >= cnt THEN
+            LEAVE read_loop;
+        END IF;
+    END LOOP;
+
+    CLOSE stu_cur;
+END //
+
+
